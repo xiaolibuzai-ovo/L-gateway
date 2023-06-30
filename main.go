@@ -6,14 +6,13 @@ import (
 	"context"
 	"flag"
 	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/app/middlewares/server/recovery"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 	"github.com/cloudwego/hertz/pkg/network/standard"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	"github.com/xiaolibuzai-ovo/L-gateway/GateWay"
 	dashboard "github.com/xiaolibuzai-ovo/L-gateway/biz"
 	"github.com/xiaolibuzai-ovo/L-gateway/biz/dal"
+	"github.com/xiaolibuzai-ovo/L-gateway/biz/dao"
 	"os"
 )
 
@@ -35,9 +34,10 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
+	dal.Init()
+
 	if *endpoint == "dashboard" {
 		//初始化数据库
-		dal.Init()
 
 		h := server.Default(
 			server.WithHostPorts(port),
@@ -45,19 +45,11 @@ func main() {
 			server.WithTransport(standard.NewTransporter),
 		)
 		dashboard.RegisterDashBoard(h)
-
 		h.Spin()
 	} else if *endpoint == "server" {
-		h := server.Default(
-			server.WithHostPorts(port),
-			server.WithMaxRequestBodySize(size),
-			server.WithTransport(standard.NewTransporter),
-		)
-
-		h.Use(recovery.Recovery(recovery.WithRecoveryHandler(MyRecoveryHandler)))
-
-		GateWay.RegisterGateWay(h)
-
+		// 加载服务列表到内存中,优化速度
+		ctx := context.Background()
+		dao.ServiceManipulator.LoadServiceManager(ctx)
 		go func() {
 			//启动https端口监听
 		}()
@@ -67,7 +59,6 @@ func main() {
 		}()
 
 	}
-
 }
 func MyRecoveryHandler(c context.Context, ctx *app.RequestContext, err interface{}, stack []byte) {
 	hlog.SystemLogger().CtxErrorf(c, "[Recovery] err=%v\nstack=%s", err, stack)
