@@ -48,6 +48,7 @@ func (sm *ServiceManager) LoadServiceManager(ctx context.Context) {
 			sm.err = err
 			return
 		}
+		// TODO 优化，数据过多则分批次取
 		params := &ServiceListInput{PageNo: 1, PageSize: 99999}
 		list, _, err := serviceInfo.PageList(ctx, db, params)
 		if err != nil {
