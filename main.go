@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/http_proxy_router"
 	dashboard "github.com/xiaolibuzai-ovo/L-gateway/biz"
 	"github.com/xiaolibuzai-ovo/L-gateway/biz/dal"
 	"github.com/xiaolibuzai-ovo/L-gateway/biz/dao"
@@ -47,11 +48,11 @@ func main() {
 		ctx := context.Background()
 		dao.ServiceManipulator.LoadServiceManager(ctx)
 		go func() {
-			//启动https端口监听
+			//启动http端口监听
+			http_proxy_router.HttpServerRun()
 		}()
 		go func() {
-			//启动http端口监听
-
+			//启动https端口监听
 		}()
 
 	}
