@@ -2,7 +2,11 @@ package dao
 
 import (
 	"context"
-	"github.com/xiaolibuzai-ovo/L-gateway/biz/dal/mysql"
+	"errors"
+	"github.com/gin-gonic/gin"
+	"github.com/xiaolibuzai-ovo/L-gateway/consts"
+	"github.com/xiaolibuzai-ovo/L-gateway/database/mysql"
+	"strings"
 	"sync"
 )
 
@@ -69,4 +73,32 @@ func (sm *ServiceManager) LoadServiceManager(ctx context.Context) {
 			sm.ServiceList = append(sm.ServiceList, serviceDetail)
 		}
 	})
+}
+
+func (sm *ServiceManager) HTTPAccessWay(c *gin.Context) (service *ServiceDetail, err error) {
+	// 域名匹配 host c.Request.Host www.xiaolibuzai.com
+	// 前缀匹配 path c.Request.URL.Path /xiaolibuzai
+	host := c.Request.Host
+	host = host[0:strings.Index(host, ":")]
+	path := c.Request.URL.Path
+	for _, serviceItem := range sm.ServiceList {
+		// TODO 封装的时候就将不同服务区分
+		if serviceItem.Info.LoadType != consts.LoadTypeHTTP {
+			// 非http服务
+			continue
+		}
+		if serviceItem.HTTPRule.RuleType == consts.HTTPRuleTypeDomain {
+			// 域名匹配
+			if serviceItem.HTTPRule.Rule == host {
+				return serviceItem, nil
+			}
+		}
+		if serviceItem.HTTPRule.RuleType == consts.HTTPRuleTypePrefixURL {
+			// url前缀匹配
+			if strings.HasPrefix(path, serviceItem.HTTPRule.Rule) {
+				return serviceItem, nil
+			}
+		}
+	}
+	return nil, errors.New("没有匹配到服务")
 }

@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/http_proxy_router"
-	dashboard "github.com/xiaolibuzai-ovo/L-gateway/biz"
-	"github.com/xiaolibuzai-ovo/L-gateway/biz/dal"
-	"github.com/xiaolibuzai-ovo/L-gateway/biz/dao"
+	"github.com/xiaolibuzai-ovo/L-gateway/dao"
+	"github.com/xiaolibuzai-ovo/L-gateway/database"
+	"github.com/xiaolibuzai-ovo/L-gateway/router"
 	"os"
 )
 
@@ -30,7 +30,7 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
-	dal.Init()
+	database.Init()
 
 	if *endpoint == "dashboard" {
 		//初始化数据库
@@ -40,7 +40,7 @@ func main() {
 		//	server.WithMaxRequestBodySize(size),
 		//	server.WithTransport(standard.NewTransporter),
 		//)
-		dashboard.RegisterDashBoard(r)
+		router.RegisterDashBoard(r)
 
 		r.Run(fmt.Sprintf(":%d", port)) // 监听并在 0.0.0.0:8080 上启动服务
 	} else if *endpoint == "server" {

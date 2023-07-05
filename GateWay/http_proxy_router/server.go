@@ -1,13 +1,14 @@
 package http_proxy_router
 
 import (
+	middleware "github.com/xiaolibuzai-ovo/L-gateway/GateWay/common_middleware"
 	"log"
 	"net/http"
 	"time"
 )
 
 func HttpServerRun() {
-	r := InitRouter()
+	r := InitRouter(middleware.RecoveryMiddleware(), middleware.RequestLog())
 	addr := ":8080"
 	server := &http.Server{
 		Addr:              addr,
