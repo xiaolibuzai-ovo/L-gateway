@@ -1,4 +1,4 @@
-package mysql
+package db_mysql
 
 import (
 	"gorm.io/driver/mysql"
