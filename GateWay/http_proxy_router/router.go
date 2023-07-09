@@ -17,8 +17,9 @@ func InitRouter(middlewares ...gin.HandlerFunc) *gin.Engine {
 
 	router.Use(
 		http_proxy_middleware.HTTPAccessWayMiddleware(),       // 匹配接入方式
-		http_proxy_middleware.HTTPWhiteListFilterMiddleware(), // 匹配接入方式
-		http_proxy_middleware.HTTPBlackListFilterMiddleware(), // 匹配接入方式
+		http_proxy_middleware.HTTPFlowCalculateMiddleware(),   // 流量统计
+		http_proxy_middleware.HTTPWhiteListFilterMiddleware(), // 白名单过滤
+		http_proxy_middleware.HTTPBlackListFilterMiddleware(), // 黑名单过滤
 		http_proxy_middleware.HTTPReverseProxyMiddleware(),    // 反向代理
 	)
 	return router

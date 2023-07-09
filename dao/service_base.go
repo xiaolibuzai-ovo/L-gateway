@@ -47,7 +47,7 @@ func NewServiceManager() *ServiceManager {
 func (sm *ServiceManager) LoadServiceManager(ctx context.Context) {
 	sm.Init.Do(func() {
 		serviceInfo := &ServiceInfo{}
-		db, err := mysql.GetDbConn()
+		db, err := mysql.GetMysqlConn()
 		if err != nil {
 			sm.err = err
 			return
