@@ -25,6 +25,6 @@ func InitMysql() {
 	}
 }
 
-func GetDbConn() (*gorm.DB, error) {
+func GetMysqlConn() (*gorm.DB, error) {
 	return DB, err
 }
