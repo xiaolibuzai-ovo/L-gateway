@@ -56,6 +56,13 @@ func NewRedisFlowCountService(appID string, interval time.Duration) *RedisFlowCo
 				fmt.Println("reqCounter.GetDayData err", err)
 				continue
 			}
+			// qps计算方式
+			/*
+				第一次请求记录当前时间
+				后续每次使用内存中的请求次数与时间差的比值
+				内存中的数据没秒刷新到redis
+				cron任务将每天的redis数据同步mysql并清除redis
+			*/
 			nowUnix := time.Now().Unix()
 			if reqCounter.Unix == 0 {
 				reqCounter.Unix = time.Now().Unix()
