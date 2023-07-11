@@ -18,7 +18,7 @@ func HTTPFlowCalculateMiddleware() gin.HandlerFunc {
 		}
 		serviceDetail := serverInterface.(*dao.ServiceDetail)
 		//统计项 1 全站 2 服务
-		totalCounter, err := flow_calculate.FlowCalculateHandler.GetCounter(consts.FlowTotal)
+		totalCounter, err := flow_calculate.FlowCalculateHandler.GetCounter(consts.FlowCalculateTotal)
 		if err != nil {
 			// TODO 记录日志
 			c.Abort()
@@ -28,7 +28,7 @@ func HTTPFlowCalculateMiddleware() gin.HandlerFunc {
 
 		//dayCount, _ := totalCounter.GetDayData(time.Now())
 		//fmt.Printf("totalCounter qps:%v,dayCount:%v", totalCounter.QPS, dayCount)
-		serviceCounter, err := flow_calculate.FlowCalculateHandler.GetCounter(consts.FlowServicePrefix + serviceDetail.Info.ServiceName)
+		serviceCounter, err := flow_calculate.FlowCalculateHandler.GetCounter(consts.FlowCalculateServicePrefix + serviceDetail.Info.ServiceName)
 		if err != nil {
 			// TODO 记录日志
 			c.Abort()
