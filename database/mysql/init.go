@@ -14,7 +14,7 @@ var (
 // todo 可配置化
 
 func InitMysql() {
-	var dsn = "root:lmz0521@tcp(123.57.130.104:3306)/L-gateway_1?charset=utf8&parseTime=True&loc=Local"
+	var dsn = "root:xxx@tcp(xx.xx.xx.xx:3306)/L-gateway_1?charset=utf8&parseTime=True&loc=Local"
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
