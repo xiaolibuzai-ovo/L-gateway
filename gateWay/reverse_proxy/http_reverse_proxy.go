@@ -2,7 +2,7 @@ package reverse_proxy
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/reverse_proxy/load_balance"
+	"github.com/xiaolibuzai-ovo/L-gateway/gateWay/reverse_proxy/load_balance"
 	"net/http"
 	"net/http/httputil"
 	"net/url"

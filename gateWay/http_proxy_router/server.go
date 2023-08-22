@@ -1,7 +1,7 @@
 package http_proxy_router
 
 import (
-	middleware "github.com/xiaolibuzai-ovo/L-gateway/GateWay/common_middleware"
+	middleware "github.com/xiaolibuzai-ovo/L-gateway/gateWay/common_middleware"
 	"log"
 	"net/http"
 	"time"

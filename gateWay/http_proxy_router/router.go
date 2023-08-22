@@ -2,7 +2,7 @@ package http_proxy_router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/http_proxy_middleware"
+	"github.com/xiaolibuzai-ovo/L-gateway/gateWay/http_proxy_middleware"
 	"net/http"
 )
 

@@ -5,9 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/http_proxy_router"
 	"github.com/xiaolibuzai-ovo/L-gateway/dao"
 	"github.com/xiaolibuzai-ovo/L-gateway/database"
+	"github.com/xiaolibuzai-ovo/L-gateway/gateWay/http_proxy_router"
 	"github.com/xiaolibuzai-ovo/L-gateway/router"
 	"os"
 )

@@ -2,9 +2,9 @@ package http_proxy_middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/xiaolibuzai-ovo/L-gateway/GateWay/flow_calculate"
 	"github.com/xiaolibuzai-ovo/L-gateway/consts"
 	"github.com/xiaolibuzai-ovo/L-gateway/dao"
+	"github.com/xiaolibuzai-ovo/L-gateway/gateWay/flow_calculate"
 )
 
 // HTTPFlowCalculateMiddleware 流量统计
